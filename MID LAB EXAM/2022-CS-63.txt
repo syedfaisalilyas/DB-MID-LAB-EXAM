@@ -1,0 +1,46 @@
+Q1
+select AspNetUsers.Email,SpikoCourse.CourseTitle
+from AspNetUsers
+join SpikoStudent
+On SpikoStudent.UserId = AspNetUsers.Id
+Join SpikoAssignmentSubmission 
+on SpikoStudent.StudentId = SpikoAssignmentSubmission.StudentId
+join SpikoAssignment
+on SpikoAssignment.Id = SpikoAssignmentSubmission.AssignmentId
+join SpikoStudentEvaluation
+on SpikoStudentEvaluation.StudentId = SpikoStudent.StudentId
+join SpikoEvaluation
+on SpikoEvaluation.id = SpikoStudentEvaluation.EvaluationId
+join SpikoCourse
+on SpikoCourse.CourseId =  SpikoEvaluation.CourseId
+where SpikoCourse.CourseId is not null AND SpikoAssignmentSubmission.AssignmentId is NULL
+***
+
+
+Q2
+select SpikoCourse.CourseTitle
+from SpikoCourse 
+where IsActive = 0
+***
+
+
+Q3
+select SpikoAssignment.Id
+from SpikoAssignment
+join SpikoAssignmentSubmission
+on SpikoAssignmentSubmission.AssignmentId = SpikoAssignment.Id
+join SpikoStudent
+on SpikoStudent.StudentId = SpikoAssignmentSubmission.StudentId
+where SpikoAssignmentSubmission.SubmittedOn < SpikoAssignment.DeadLine
+and (select COUNT(SpikoAssignmentSubmission.StudentId)
+       from SpikoAssignmentSubmission
+	   where SpikoAssignmentSubmission.SubmittedOn < SpikoAssignment.DeadLine)<=2
+***
+
+
+Q4
+select s1.RegistrationNumber RegistrationNumber1,s2.RegistrationNumber RegistrationNumber2
+from SpikoStudent s1,SpikoStudent s2 ,SpikoStudentEvaluation,SpikoEvaluation,SpikoCourse
+where CourseId 
+***
+
